@@ -5,8 +5,20 @@ const cookieParser = require('cookie-parser')
 const ejs = require('ejs')
 const uuidv4 = require('uuid/v4');
 const PORT = process.env.PORT || 5000
+const cookies = require('./cookies')
 
-app.use(cors())
+function allowCrossDomain(req,res,next) {  
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Accept,X-Requested-With');
+
+  if (req.method!='OPTIONS') return next();
+
+  res.send(204);
+}  
+
+app.use(allowCrossDomain)
 app.use(cookieParser());
 app.engine('html', require('ejs').renderFile)
 
@@ -19,19 +31,21 @@ app.get('/cookies', (req, res) => {
 })
 
 app.get('/clear', function(req,res){
-  res.clearCookie(COOKIE_NAME);
+  res.clearCookie(cookies.COOKIE_NAME);
   res.send('Cookie deleted');
 });
 
 app.post('/cookie', (req, res) => {
-  let cookie = cookieData(req)
+  let cookie = cookies.data(req)
   let cookieExpireTime = {expire : new Date() + 9999}
 
   console.log('POST COOKIE')
   console.log('cookie', cookie)
   console.log('cookieExpireTime', cookieExpireTime)
+  console.log('req.headers.origin', req.headers.origin)
 
-  res.cookie(COOKIE_NAME, cookie).send('Cookie is set')
+  res.cookie(cookies.COOKIE_NAME, cookie, {maxAge: 900000})
+  res.send(cookie)
 })
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
@@ -46,7 +60,7 @@ const cookieData = (req) => {
    */
   let cookie = req.cookies[COOKIE_NAME]
   if(cookie === undefined) {
-    return createCookie()
+    return createCookie(req)
   }
 
   /**
@@ -62,8 +76,12 @@ const cookieData = (req) => {
  * creation_time -> Cookie creation time
  * http://shipit.resultadosdigitais.com.br/blog/compartilhando-cookies-entre-dominios/
  */
-const createCookie = () => {
-  return JSON.stringify({id: uuidv4(), creation_time: new Date()})
+const createCookie = (req) => {
+  return JSON.stringify({
+    id: uuidv4(), 
+    creation_time: new Date(),
+    url: req.headers.origin
+  })
 }
 
 /**
