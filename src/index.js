@@ -1,12 +1,10 @@
-const expressConfig = require('./configs/express')
-  mongoConfig = require('./configs/mongo'),
-  
-/**
- * Prepares express
- */
+const mongooseConfig = require('./configs/mongoose'),
+  expressConfig = require('./configs/express')
+
+
+/** Prepares mongoose */
+mongooseConfig() 
+
+/** Prepares express */
 expressConfig()
 
-/**
- * Prepares mongoose
- */
-mongoConfig()

@@ -1,23 +1,28 @@
-const mongoose = require('mongoose'),
-    Schema = mongoose.Schema
+const mongoose = require('mongoose')
 
-const Contact = Schema({
-    name: {
-        type: String,
-    },
-    email: {
-        type: String,
-    },
-    genre: {
-        type: String,
-    },
-    created_date: {
+const Contact = mongoose.Schema({
+    email: String,
+    created_datetime: {
         type: Date,
         default: Date.now
     },
-    tracks: [{
-        type: Schema.ObjectId, ref: 'Track'
-    }]
+    tracks: [
+        {
+            uuid: String,
+            url: String,
+            created_datetime: Date,
+            pages: [
+                {
+                    path: String,
+                    logs: [
+                        {
+                            created_datetime: Date
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 });
 
 module.exports = mongoose.model('Contact', Contact);

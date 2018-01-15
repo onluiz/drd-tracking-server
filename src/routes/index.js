@@ -1,3 +1,4 @@
 module.exports = function (app) {
-  require('../routes/cookies')(app);
+  require('./cookies')(app)
+  require('./contacts')(app)
 };

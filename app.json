@@ -2,5 +2,8 @@
   "name": "drd-tracking-server",
   "description": "Desafio Resultados Digitais - Tracking Server",
   "repository": "",
-  "keywords": ["node", "express", "heroku"]
+  "keywords": [
+    "Resultados Digitais",
+    "Desafio Resultados Digitais"
+  ]
 }

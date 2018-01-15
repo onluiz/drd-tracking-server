@@ -1,5 +1,35 @@
-const mongoose = require('mongoose');
-  Contact = mongoose.model('Contact');
+const mongoose = require('mongoose'),
+  Contact = mongoose.model('Contact'),
+  Track = mongoose.model('Track'),
+  Page = mongoose.model('Page')
+
+exports.createOrUpdate = (contact) => {
+    // contact.email = 'luiz@gmail.com1'
+
+    // let dogs = [
+    //     {
+    //         _
+    //         name: 'test',
+    //         birth_date: new Date(),
+    //         toys: [
+    //             {
+    //                 name: 'ball',
+    //                 logs: [
+    //                     {
+    //                         created_datetime: new Date(),
+    //                     }
+    //                 ]
+    //             }
+    //         ]
+    //     }
+    // ]
+
+    // contact.dogs = dogs
+    // let contactObj = new Contact(contact)
+    // contactObj.save()
+    // Contact.findOne({email: contact.email}).exec((err, obj) => {
+    // })
+}
 
 exports.findById = (req, res) => {
   Contact.findById(req.params.id, (err, obj) => {
