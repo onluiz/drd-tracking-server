@@ -11,6 +11,7 @@
 - GET https://localhost:PORT/cookies to see all the tracks saved
 - POST https://localhost:PORT/cookies to save new tracks (check src -> trackModel.js)
 
-## Notes
-- Some dependencies will be revised
-- /cookies need a better page =P
+## TODOS
+- Remove non-used dependencies from package.json
+- Add unit tests
+- Add ENV vars for dev port
