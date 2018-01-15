@@ -15,7 +15,7 @@ module.exports = () => {
   app.use('/', express.static(path.join(__dirname, '../../public')))
 
   /** Routes */
-  require('../routes')(app)
+  require('../cookiesRoutes')(app)
 
   app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 }

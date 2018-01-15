@@ -1,13 +1,12 @@
 module.exports = function(app) {
   
-  const cookies = require('../services/cookies')
   const uuidv4 = require('uuid/v4')
   const COOKIE_NAME = '_server.cookie'
-  const Track2 = require('../models/track2')
+  const Track = require('./trackModel')
 
   app.route('/cookies')
     .get(function(req, res) {
-      Track2
+      Track
       .find({})
       .sort("-created_datetime")
       .exec((err, obj) => {
@@ -28,7 +27,7 @@ module.exports = function(app) {
       }
 
       if(cookieReq._id !== undefined) {
-        return Track2.findById(cookieReq._id, function(err, obj) {
+        return Track.findById(cookieReq._id, function(err, obj) {
           if(err) {
             console.log('Update err ->', err)
           }
@@ -45,7 +44,7 @@ module.exports = function(app) {
         })
       }
 
-      let track2Obj = new Track2(cookieReq)
+      let track2Obj = new Track(cookieReq)
       track2Obj.save((err, obj) => {
         res.cookie('_server.cookie', JSON.stringify(obj), {maxAge: 900000, expires: 900000})
         console.log('Obj from Save -> ', obj)
@@ -53,7 +52,4 @@ module.exports = function(app) {
       })
     })
 
-  app.route('/cookies/clear')
-    .get(cookies.clear)
-    
 };

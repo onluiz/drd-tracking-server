@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const Track2 = mongoose.Schema({
+const Track = mongoose.Schema({
     uuid: String,
     email: String,
     host: String,
@@ -14,4 +14,4 @@ const Track2 = mongoose.Schema({
     }]
 });
 
-module.exports = mongoose.model('Track2', Track2);
+module.exports = mongoose.model('Track', Track);
